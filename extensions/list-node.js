@@ -1,10 +1,10 @@
 class ListNode {
-  constructor(x) {
-    this.value = x;
-    this.next = null;
-  }
+	constructor(data) {
+		this.value = data;
+		this.next = null;
+	}
 }
 
 module.exports = {
-  ListNode
+	ListNode
 };
