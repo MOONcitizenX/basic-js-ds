@@ -76,7 +76,45 @@ class BinarySearchTree {
 		return currentNode;
 	}
 
-	remove(data) {}
+	remove(data) {
+		const removeNode = (node, data) => {
+			if (!node) {
+				return null;
+			}
+
+			if (data < node.data) {
+				node.left = removeNode(node.left, data);
+				return node;
+			} else if (data > node.data) {
+				node.right = removeNode(node.right, data);
+				return node;
+			} else {
+				// no children
+				if (!node.left && !node.right) {
+					return null;
+				}
+				//no left
+				if (!node.left) {
+					node = node.right;
+					return node;
+				}
+				// no right
+				if (!node.right) {
+					node = node.left;
+					return node;
+				}
+				// has 2 children
+				let rightMin = node.right;
+				while (rightMin.left) {
+					rightMin = rightMin.left;
+				}
+				node.data = rightMin.data;
+				node.right = removeNode(node.right, rightMin.data);
+				return node;
+			}
+		};
+		this.rootNode = removeNode(this.rootNode, data);
+	}
 
 	min() {
 		let currentNode = this.rootNode;
@@ -94,21 +132,6 @@ class BinarySearchTree {
 		return currentNode.data;
 	}
 }
-
-// const tree = new BinarySearchTree();
-// tree.add(10);
-// tree.add(6);
-// tree.add(8);
-// tree.add(12);
-// tree.add(7);
-// tree.add(5);
-// console.log(tree.root());
-// tree.add(4);
-// console.log(tree.root());
-// console.log(tree.min());
-// console.log(tree.max());
-// console.log(tree.find(2));
-// console.log(tree.has(5));
 
 module.exports = {
 	BinarySearchTree
